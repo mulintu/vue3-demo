@@ -14,7 +14,9 @@
       <span>{{ active }}/{{ all }}</span>
     </div>
     <!-- 鼠标位置 -->
-    <div>{{x}}, {{y}}</div>   
+    <div>{{x}}, {{y}}</div> 
+    <!-- 通过css改变颜色   -->
+    <h1 @click="add">{{ count}}</h1>
   </div>
 </template>
 
@@ -22,7 +24,16 @@
 import { computed, ref } from "vue";
 import {useMouse} from '../utils/mouse'
 
+//鼠标位置
 let {x,y}=useMouse()
+
+//css
+let count = ref(1)
+let color=ref('red')
+function add(){
+  count.value++
+  color.value=Math.random() > 0.5 ? 'blue': 'red'
+}
 
 
 //只需要获取所需的变量就行了，具体逻辑useTodos去实现
@@ -63,6 +74,8 @@ function useTodos() {
 </script>
 
 <style scoped>
-.done {
+h1 {
+  color: v-bind(color);
+  cursor: pointer;
 }
 </style>
