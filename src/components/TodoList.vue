@@ -13,12 +13,19 @@
       全选<input type="checkbox" v-model="allDone" />
       <span>{{ active }}/{{ all }}</span>
     </div>
+    <!-- 鼠标位置 -->
+    <div>{{x}}, {{y}}</div>   
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import {useMouse} from '../utils/mouse'
 
+let {x,y}=useMouse()
+
+
+//只需要获取所需的变量就行了，具体逻辑useTodos去实现
 let { title, todos, addTodo, clear, active, all, allDone } = useTodos();
 
 //一个组件有多段功能代码的话，可以把功能独立的模块封装成一个独立的函数
