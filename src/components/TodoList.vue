@@ -53,6 +53,7 @@ function useTodos() {
   let title = ref("");
 
   //解决状态在刷新后就没有了的问题，将存储过程提取未工具函数
+  //在外面对todos进行操作，在useStorage里面监听todos的变化
   let todos = useStorage("todos", []);
 
   function addTodo() {
