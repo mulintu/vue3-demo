@@ -1,11 +1,12 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
+// 获取鼠标位置
 export function useMouse() {
 	const x = ref(0);
 	const y = ref(0);
 
 	function update(e) {
-		console.log(e);
+		// console.log(e);
 		x.value = e.pageX;
 		y.value = e.pageY;
 	}

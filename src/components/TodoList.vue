@@ -14,27 +14,35 @@
       <span>{{ active }}/{{ all }}</span>
     </div>
     <!-- 鼠标位置 -->
-    <div>{{x}}, {{y}}</div> 
+    <div>{{ x }}, {{ y }}</div>
     <!-- 通过css改变颜色   -->
-    <h1 @click="add">{{ count}}</h1>
+    <h1 @click="add">{{ count }}</h1>
+    <button @click="loading">更改favicon</button>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import {useMouse} from '../utils/mouse'
+import { computed, ref, watchEffect } from "vue";
+import { useMouse } from "../utils/mouse";
+import { useStorage } from "../utils/useStorage";
+import useFavicon from "../utils/useFavicon";
 
-//鼠标位置
-let {x,y}=useMouse()
+//获取鼠标位置
+let { x, y } = useMouse();
 
-//css
-let count = ref(1)
-let color=ref('red')
-function add(){
-  count.value++
-  color.value=Math.random() > 0.5 ? 'blue': 'red'
+//css使用js变量
+let count = ref(1);
+let color = ref("red");
+function add() {
+  count.value++;
+  color.value = Math.random() > 0.5 ? "blue" : "red";
 }
 
+//更改网站图标
+let { favicon } = useFavicon();
+function loading() {
+  favicon.value = "./assets/logo.png";
+}
 
 //只需要获取所需的变量就行了，具体逻辑useTodos去实现
 let { title, todos, addTodo, clear, active, all, allDone } = useTodos();
@@ -43,7 +51,9 @@ let { title, todos, addTodo, clear, active, all, allDone } = useTodos();
 //如果是可以公用的，那么可以单独提取成一个js文件放在utils里
 function useTodos() {
   let title = ref("");
-  let todos = ref([{ title: "学习vue", done: false }]);
+
+  //解决状态在刷新后就没有了的问题，将存储过程提取未工具函数
+  let todos = useStorage("todos", []);
 
   function addTodo() {
     todos.value.push({
