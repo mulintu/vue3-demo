@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background:#fff;">
     <input type="text" v-model="title" @keypress.enter="addTodo" />
     <button v-if="active < all" @click="clear">清理</button>
     <ul v-if="todos.length">

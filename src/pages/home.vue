@@ -1,6 +1,7 @@
 <template>
   <h1>这是首页</h1>
-  <TodoList />
+  <div @click="toggle">进入全屏</div>
+  <TodoList ref="todo"/>
   <Rate :value="score"></Rate>
 </template>
 
@@ -8,6 +9,10 @@
 import { ref } from "@vue/runtime-core";
 import TodoList from "../components/TodoList.vue";
 import Rate from "../components/Rate.vue";
+import { useFullscreen } from '@vueuse/core'
 
 let score = ref(3);
+
+const todo = ref(null)
+const { toggle } = useFullscreen(todo)
 </script>
