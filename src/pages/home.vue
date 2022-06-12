@@ -2,7 +2,7 @@
   <h1>这是首页</h1>
   <div @click="toggle">进入全屏</div>
   <TodoList ref="todo" />
-  <Rate v-model="score"></Rate>
+  <Rate v-model="score">Rate组件的子组件</Rate>
 </template>
 
 <script setup>
