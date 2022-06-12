@@ -2,7 +2,7 @@
   <h1>这是首页</h1>
   <div @click="toggle">进入全屏</div>
   <TodoList ref="todo" />
-  <Rate :value="score" @update-rate="update"></Rate>
+  <Rate v-model="score"></Rate>
 </template>
 
 <script setup>
@@ -12,9 +12,9 @@ import Rate from "../components/Rate.vue";
 import { useFullscreen } from "@vueuse/core";
 
 let score = ref(3.5);
-function update(num) {
-  score.value = num;
-}
+// function update(num) {
+//   score.value = num;
+// }
 
 const todo = ref(null);
 const { toggle } = useFullscreen(todo);
