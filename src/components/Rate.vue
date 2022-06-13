@@ -26,7 +26,7 @@ let props = defineProps({
 });
 
 //定义emits
-// let emits=defineEmits('update-rate')
+// let emits=defineEmits(['update-rate'])
 let emits = defineEmits(["update:modelValue"]);
 function onRate(num) {
   emits("update:modelValue", num);

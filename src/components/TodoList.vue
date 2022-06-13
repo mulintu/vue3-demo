@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#fff;">
+  <div style="background: #fff">
     <input type="text" v-model="title" @keypress.enter="addTodo" />
     <button v-if="active < all" @click="clear">清理</button>
     <ul v-if="todos.length">
@@ -19,6 +19,12 @@
     <h1 @click="add">{{ count }}</h1>
     <button @click="loading">更改favicon</button>
   </div>
+  <transition name="modal">
+  
+  <div v-if="showModal">
+    <div class="info">你啥也没输入</div>
+  </div>
+  </transition>
 </template>
 
 <script setup>
@@ -45,7 +51,7 @@ function loading() {
 }
 
 //只需要获取所需的变量就行了，具体逻辑useTodos去实现
-let { title, todos, addTodo, clear, active, all, allDone } = useTodos();
+let { title, todos, addTodo, clear, active, all, allDone, showModal } = useTodos();
 
 //一个组件有多段功能代码的话，可以把功能独立的模块封装成一个独立的函数
 //如果是可以公用的，那么可以单独提取成一个js文件放在utils里
@@ -56,7 +62,18 @@ function useTodos() {
   //在外面对todos进行操作，在useStorage里面监听todos的变化
   let todos = useStorage("todos", []);
 
+  //显示提示框
+  let showModal = ref(false);
+
   function addTodo() {
+    if (!title.value.trim()) {
+      showModal.value = true;
+
+      setTimeout(() => {
+        showModal.value = false;
+      }, 1500);
+      return;
+    }
     todos.value.push({
       title: title.value,
       done: false,
@@ -80,7 +97,7 @@ function useTodos() {
     },
   });
 
-  return { title, todos, addTodo, clear, active, all, allDone };
+  return { title, todos, addTodo, clear, active, all, allDone, showModal };
 }
 </script>
 
@@ -88,5 +105,21 @@ function useTodos() {
 h1 {
   color: v-bind(color);
   cursor: pointer;
+}
+.info-wrapper {
+  position: fixed;
+  top: 20px;
+  width: 200px;
+}
+.info {
+  padding: 20px;
+  color: white;
+  background: #d88986;
+}
+.modal-enter-from, .modal-leave-to {
+  opacity: 0;
+}
+.modal-enter-active, .modal-leave-active {
+  transition: opacity 1s;
 }
 </style>
