@@ -2,12 +2,15 @@
   <div style="background: #fff">
     <input type="text" v-model="title" @keypress.enter="addTodo" />
     <button v-if="active < all" @click="clear">清理</button>
-    <ul v-if="todos.length">
-      <li v-for="todo in todos" :key="todo.title">
-        <input type="checkbox" v-model="todo.done" />
-        <span :class="{ done: todo.done }">{{ todo.title }}</span>
-      </li>
-    </ul>
+    <div v-if="todos.length">
+      <transition-group tag="ul" name="flip-list">
+        <li v-for="todo in todos" :key="todo.title">
+          <input type="checkbox" v-model="todo.done" />
+          <span :class="{ done: todo.done }">{{ todo.title }}</span>
+        </li>
+      </transition-group>
+    </div>
+
     <div v-else>暂无数据</div>
     <div>
       全选<input type="checkbox" v-model="allDone" />
@@ -20,10 +23,9 @@
     <button @click="loading">更改favicon</button>
   </div>
   <transition name="modal">
-  
-  <div v-if="showModal">
-    <div class="info">你啥也没输入</div>
-  </div>
+    <div v-if="showModal">
+      <div class="info">你啥也没输入</div>
+    </div>
   </transition>
 </template>
 
@@ -51,7 +53,8 @@ function loading() {
 }
 
 //只需要获取所需的变量就行了，具体逻辑useTodos去实现
-let { title, todos, addTodo, clear, active, all, allDone, showModal } = useTodos();
+let { title, todos, addTodo, clear, active, all, allDone, showModal } =
+  useTodos();
 
 //一个组件有多段功能代码的话，可以把功能独立的模块封装成一个独立的函数
 //如果是可以公用的，那么可以单独提取成一个js文件放在utils里
@@ -116,10 +119,25 @@ h1 {
   color: white;
   background: #d88986;
 }
-.modal-enter-from, .modal-leave-to {
+.modal-enter-from,
+.modal-leave-to {
   opacity: 0;
 }
-.modal-enter-active, .modal-leave-active {
+.modal-enter-active,
+.modal-leave-active {
   transition: opacity 1s;
+}
+
+.flip-list-enter-from,
+.flip-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.flip-list-enter-active,
+.flip-list-leave-active {
+  transition: all 2s;
+}
+.flip-list-move {
+  transition: all 0.8s ease;
 }
 </style>

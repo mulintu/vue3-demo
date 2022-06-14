@@ -8,7 +8,11 @@
     <router-link to="/">首页</router-link>|
     <router-link to="/about">关于</router-link>
   </div>
-  <router-view></router-view>
+  <router-view v-slot="{ Component }">
+    <transition name="route" mode="out-in">
+      <component :is='Component'></component>
+    </transition>
+  </router-view>
 </template>
 
 <style>
@@ -22,5 +26,13 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.route-enter-from, .route-leave-to {
+  opacity: 0;
+}
+.route-enter-active, .route-leave-active {
+  transition: opacity 1s;
+  
+  
 }
 </style>

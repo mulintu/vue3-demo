@@ -1,9 +1,12 @@
 <template>
+<div>
   <h1>这是首页</h1>
   <div @click="toggle">进入全屏</div>
-  <TodoList ref="todo" />
+  <TodoList/>
   <Rate v-model="score">Rate组件的子组件</Rate>
   <learnTransition></learnTransition>
+</div>
+  
 </template>
 
 <script setup>
@@ -18,6 +21,5 @@ let score = ref(3.5);
 //   score.value = num;
 // }
 
-const todo = ref(null);
-const { toggle } = useFullscreen(todo);
+const { toggle } = useFullscreen();
 </script>
