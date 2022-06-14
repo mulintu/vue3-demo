@@ -4,13 +4,13 @@
     <button v-if="active < all" @click="clear">清理</button>
     <div v-if="todos.length">
       <transition-group tag="ul" name="flip-list">
-        <li v-for="todo in todos" :key="todo.title">
+        <li v-for="(todo, i) in todos" :key="todo.title">
           <input type="checkbox" v-model="todo.done" />
           <span :class="{ done: todo.done }">{{ todo.title }}</span>
+          <span class="remove-btn" @click="removeTodo($event, i)">删除</span>
         </li>
       </transition-group>
     </div>
-
     <div v-else>暂无数据</div>
     <div>
       全选<input type="checkbox" v-model="allDone" />
@@ -22,6 +22,16 @@
     <h1 @click="add">{{ count }}</h1>
     <button @click="loading">更改favicon</button>
   </div>
+  <span class="dustbin">🗑</span>
+  <div class="animate-wrap">
+    <transition
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter"
+    >
+      <div class="animate" v-show="animate.show">📋</div>
+    </transition>
+  </div>
   <transition name="modal">
     <div v-if="showModal">
       <div class="info">你啥也没输入</div>
@@ -30,7 +40,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watchEffect } from "vue";
+import { computed, reactive, ref, watchEffect } from "vue";
 import { useMouse } from "../utils/mouse";
 import { useStorage } from "../utils/useStorage";
 import useFavicon from "../utils/useFavicon";
@@ -50,6 +60,37 @@ function add() {
 let { favicon } = useFavicon();
 function loading() {
   favicon.value = "./assets/logo.png";
+}
+
+let animate = reactive({
+  show: false,
+  el: null,
+});
+
+//设置动画元素的初始位置
+function beforeEnter(el) {
+  let dom = animate.el;
+  let rect = dom.getBoundingClientRect();
+  let x = window.innerWidth - rect.left - 60;
+  let y = rect.top - 10;
+  el.style.transform = `translate(-${x}px, ${y}px)`;
+}
+
+function enter(el, done) {
+  document.body.offsetHeight;
+  el.style.transform = `translate(0,0)`;
+  el.addEventListener("transitionend", done);
+}
+function afterEnter(el) {
+  animate.show = false;
+  el.style.display = "none";
+}
+
+function removeTodo(e, i) {
+  animate.el = e.target;
+  animate.show = true;
+  console.log(e, i);
+  todos.value.splice(i, 1);
 }
 
 //只需要获取所需的变量就行了，具体逻辑useTodos去实现
@@ -100,7 +141,16 @@ function useTodos() {
     },
   });
 
-  return { title, todos, addTodo, clear, active, all, allDone, showModal };
+  return {
+    title,
+    todos,
+    addTodo,
+    clear,
+    active,
+    all,
+    allDone,
+    showModal,
+  };
 }
 </script>
 
@@ -139,5 +189,16 @@ h1 {
 }
 .flip-list-move {
   transition: all 0.8s ease;
+}
+.remove-btn {
+  cursor: pointer;
+}
+.animate-wrap .animate,
+.dustbin {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 100;
+  /* transition: all 0.5s linear; */
 }
 </style>
