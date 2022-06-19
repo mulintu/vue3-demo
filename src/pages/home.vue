@@ -5,6 +5,7 @@
   <TodoList/>
   <Rate v-model="score">Rate组件的子组件</Rate>
   <learnTransition></learnTransition>
+  <Count></Count>
 </div>
   
 </template>
@@ -15,6 +16,7 @@ import TodoList from "../components/TodoList.vue";
 import Rate from "../components/Rate.vue";
 import { useFullscreen } from "@vueuse/core";
 import learnTransition from '../components/learnTransition.vue'
+import Count from '../components/Count.vue' 
 
 let score = ref(3.5);
 // function update(num) {
