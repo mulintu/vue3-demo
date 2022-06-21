@@ -8,11 +8,12 @@
     <router-link to="/">首页</router-link>|
     <router-link to="/about">关于</router-link>
   </div>
-  <router-view v-slot="{ Component }">
+  <!-- <router-view v-slot="{ Component }">
     <transition name="route" mode="out-in">
       <component :is='Component'></component>
     </transition>
-  </router-view>
+  </router-view> -->
+  <router-view></router-view>
 </template>
 
 <style>

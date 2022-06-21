@@ -110,6 +110,7 @@ function useTodos() {
   let showModal = ref(false);
 
   function addTodo() {
+    // debugger
     if (!title.value.trim()) {
       showModal.value = true;
 
