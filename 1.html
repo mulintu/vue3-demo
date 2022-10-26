@@ -6,71 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- flex在有滚动条和没滚动条时 width是以什么为百分比的：会按照父元素减去滚动条来计算  -->
+  <!-- position:aboslute; 90.5   滚动条19-->
   <div
-    style="margin-top: 20px;height: 100px;border:1px solid red;overflow-y: auto;position:relative;background: linear-gradient(blue 20%, transparent 20%, transparent 100%);box-shadow: inset 10px 5px 5px red;">
-    <div style="position: absolute;top:-20px;">1235</div>
-    <div style="width: 50%;height: 100vh;border:1px solid yellow;position: absolute;">
-      <ul>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li>1</li>
-      </ul>
-
-    </div>
+    style="overflow: hidden;white-space: nowrap;white-space: pre-wrap;text-overflow: ellipsis;width: 100px;background-color: yellow;">
+    <p>1222222222222222222222222222222222222</p>
+    <p>1222222222222222222222222222222222222</p>
   </div>
-
-
-
 </body>
-
 </html>

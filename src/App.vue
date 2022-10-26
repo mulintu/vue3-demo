@@ -1,6 +1,17 @@
 <script setup>
+import { ref } from "vue";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+
+function fib(n) {
+  let arr = [1, 1];
+  let i = 2;
+  while (i <= n) {
+    arr[i] = arr[i - 1] + arr[i - 2];
+    i++;
+  }
+  return arr[n];
+}
 </script>
 
 <template>
@@ -28,12 +39,12 @@
   color: #2c3e50;
   margin-top: 60px;
 }
-.route-enter-from, .route-leave-to {
+.route-enter-from,
+.route-leave-to {
   opacity: 0;
 }
-.route-enter-active, .route-leave-active {
+.route-enter-active,
+.route-leave-active {
   transition: opacity 1s;
-  
-  
 }
 </style>
